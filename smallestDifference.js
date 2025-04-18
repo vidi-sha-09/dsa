@@ -13,7 +13,26 @@
 // Output:
 // [28, 26]
 
-// SC - O(log n + log m) TC - O(nlogn + mlogm)
+// SC - O(1) TC - O(n*m)
+const sd_brute = function (a1, a2) {
+  let diff = Infinity,
+    minDiff = Infinity,
+    firstNum = 0,
+    secNum = 0;
+  for (let i = 0; i < a1.length; i++) {
+    for (let j = 0; j < a2.length; j++) {
+      diff = Math.abs(a1[i] - a2[j]);
+      if (diff < minDiff) {
+        minDiff = diff;
+        firstNum = a1[i];
+        secNum = a2[j];
+      }
+    }
+  }
+  return [firstNum, secNum];
+};
+
+// SC - O(log n + log m) - if new arrays, else O(1) - for in-place sorting;  TC - O(nlogn + mlogm)
 const sd = function (a1, a2) {
   a1.sort((a, b) => a - b);
   a2.sort((a, b) => a - b);
@@ -45,4 +64,4 @@ const sd = function (a1, a2) {
 
 arrayOne = [-1, 5, 10, 20, 28, 3];
 arrayTwo = [26, 134, 135, 15, 17];
-console.log(sd(arrayOne, arrayTwo));
+console.log(sd_brute(arrayOne, arrayTwo));
