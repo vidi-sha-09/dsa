@@ -10,6 +10,11 @@
 // op -
 // [3,9]
 
+//tail recursion
+//profiling
+//brute
+//optimal
+
 const subs = function (a) {
   let minptr = 0,
     maxptr = a.length - 1,
