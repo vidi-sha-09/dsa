@@ -21,54 +21,6 @@
 // [5, 7]
 // ```
 
-// Explanation:
-
-// * After sorting and removing duplicates: `[0,1,3,5,6,7,11,12,15]`
-// * Consecutive sequences:
-
-//   * `[0,1]` → length 2
-//   * `[5,6,7]` → length 3
-//   * `[11,12]` → length 2
-// * Longest range is `[5,7]` with 3 numbers.
-
-// ---
-
-// ✨ Sample Input 2:
-
-// ```javascript
-// array = [4, 2, 1, 3]
-// ```
-
-// ✅ Sample Output 2:
-
-// ```javascript
-// [1,4]
-// ```
-
-// Explanation:
-
-// * After sorting: `[1,2,3,4]`
-// * Whole array is consecutive: 1 → 2 → 3 → 4.
-
-// ---
-
-// ✨ Sample Input 3:
-
-// ```javascript
-// array = [10, 5, 1, 3, 2]
-// ```
-
-// ✅ Sample Output 3:
-
-// ```javascript
-// [1,3]` or `[1,5]` (depends if you allow gaps or strictly consecutive)
-// ```
-
-// * Only `[1,2,3]` are consecutive (1 → 2 → 3).
-// * `[5]` and `[10]` are isolated.
-
-// ---
-
 // 🚀 Constraints:
 
 // * Array will have at least 1 number.
@@ -128,10 +80,49 @@ const range = function (arr) {
 };
 
 // optimal approach
-//tc - O(); sc-O()
+//tc - O(n); sc-O(n)
 
-const range_opt = function (arr) {};
+function range_opt(arr) {
+  const nums = {}; // hashmap to track unvisited numbers
+  for (const num of arr) {
+    nums[num] = true;
+  }
+
+  let bestRange = [];
+  let longestLength = 0;
+
+  for (const num of arr) {
+    if (!nums[num]) continue; // if already visited, skip
+
+    nums[num] = false; // mark as visited
+    let currentLength = 1;
+
+    let left = num - 1;
+    let right = num + 1;
+
+    // expand to the left
+    while (nums[left]) {
+      nums[left] = false;
+      left--;
+      currentLength++;
+    }
+
+    // expand to the right
+    while (nums[right]) {
+      nums[right] = false;
+      right++;
+      currentLength++;
+    }
+
+    if (currentLength > longestLength) {
+      longestLength = currentLength;
+      bestRange = [left + 1, right - 1];
+    }
+  }
+
+  return bestRange;
+}
 
 arr = [1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6];
 // arr = [1, 11, 3, 0, 15, 5, 5, 5, 5, 7, 12, 6];
-console.log(range(arr));
+console.log(range_opt(arr));
