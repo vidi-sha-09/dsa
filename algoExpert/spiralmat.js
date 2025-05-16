@@ -14,6 +14,7 @@
 
 // op = [1,2,3,4,5,6,7,8,9,10,...36];
 
+//TC - O(nxm) , SC - O(nxm)
 const matrix = function (mat) {
   let n = mat.length; // row
   let m = mat[0].length; //cols
