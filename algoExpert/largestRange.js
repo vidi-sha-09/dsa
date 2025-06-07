@@ -123,6 +123,27 @@ function range_opt(arr) {
   return bestRange;
 }
 
+//optimal approach using set DS
+//tc - O(n) sc-O(n)
+
+function longestConsecutive(nums) {
+  let numSet = new Set(nums);
+  let maxLen = 0;
+  for (let num of numSet) {
+    // Check if this is the start of a sequence
+    if (!numSet.has(num - 1)) {
+      let currentNum = num;
+      let currentStreak = 1;
+      while (numSet.has(currentNum + 1)) {
+        currentNum += 1;
+        currentStreak += 1;
+      }
+      maxLen = Math.max(maxLen, currentStreak);
+    }
+  }
+  return maxLen;
+}
+
 arr = [1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6];
 // arr = [1, 11, 3, 0, 15, 5, 5, 5, 5, 7, 12, 6];
 console.log(range_opt(arr));
